@@ -6,7 +6,7 @@ import numpy as np
 app = Flask(__name__)
 
 # Load your machine learning model (make sure the model is in the same directory)
-model = joblib.load('customer_churn_random_forest_model.pkl')
+model = joblib.load('customer_churn_model.pkl')
 encoders = joblib.load('encoder.pkl')
 
 # Home route to render the HTML form
