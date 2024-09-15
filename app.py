@@ -35,13 +35,14 @@ def predict():
         contract = request.form['contract']
         paperless_billing = request.form['paperless_billing']
         payment_method = request.form['payment_method']
-        senior_citizen = int(request.form['senior_citizen'])
+        senior_citizen = request.form['senior_citizen']
         partner = request.form['partner']
         dependents = request.form['dependents']
 
         encoded_features = [
             encoders['gender'].transform([gender])[0],
-            encoders['Partner'].transform([partner])[0],
+            encoders['SeniorCitizen'].transform([senior_citizen])[0],
+            encoders['Partner'].transform([partner])[0],    
             encoders['Dependents'].transform([dependents])[0],
             encoders['PhoneService'].transform([phone_service])[0],
             encoders['MultipleLines'].transform([multiple_lines])[0],
@@ -58,7 +59,7 @@ def predict():
         ]
         
         # Combine numerical and encoded features
-        to_predict_array = [senior_citizen, tenure, monthly_charges, total_charges] + encoded_features
+        to_predict_array = [tenure, monthly_charges, total_charges] + encoded_features
         to_predict_array = np.array(to_predict_array).reshape((1, -1))
             
         # Perform the prediction
