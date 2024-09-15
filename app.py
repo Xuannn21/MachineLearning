@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import joblib
 import numpy as np
 
@@ -60,7 +60,7 @@ def predict():
         # Combine numerical and encoded features
         to_predict_array = [senior_citizen, tenure, monthly_charges, total_charges] + encoded_features
         to_predict_array = np.array(to_predict_array).reshape((1, -1))
-
+            
         # Perform the prediction
         prediction = model.predict(to_predict_array)[0]
 
@@ -69,12 +69,10 @@ def predict():
         else:
             result = "Won't Churn"
 
-        # Render the result in the HTML page
-        return render_template('index.html', prediction_text=f'Churn Prediction: {result}')
+        return jsonify ({'result': result})
 
     except Exception as e:
-        # Render an error message in case of an exception
-        return render_template('index.html', prediction_text=f'Error: {str(e)}')
+        return jsonify({'error': str(e)})
 
 # Run the Flask app
 if __name__ == "__main__":
