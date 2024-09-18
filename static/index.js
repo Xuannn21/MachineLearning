@@ -120,8 +120,7 @@ btn_done.addEventListener("click", function(event) {
         modal_wrapper.classList.add("active");
     } else {
         alert("Please complete all required fields in the form.");
-    }ert("Please complete all required fields in the form.");
-    // }
+    }
 });
 
 // To close modal on shadow click
@@ -170,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (serviceSelectors.internetService.value === 'Fiber optic') {
             totalMonthlyCharges += serviceCharges.internetFiberOptic;
         } else if (serviceSelectors.internetService.value === 'No') {
-            // Do nothing for 'No' internet service
         }
 
         for (const [service, selector] of Object.entries(serviceSelectors)) {
@@ -183,8 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Get the tenure value
         const tenure = parseInt(tenureInput.value, 10) || 0;
-
-        // Calculate total charges
         const totalCharges = totalMonthlyCharges * tenure;
 
         // Update the UI
@@ -197,9 +193,37 @@ document.addEventListener('DOMContentLoaded', function() {
         selector.addEventListener('change', calculateCharges);
     });
     tenureInput.addEventListener('input', calculateCharges);
-
-    // Initialize charges on page load
     calculateCharges();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const paperlessBillingSelector = document.querySelector('#paperless_billing');
+    const paymentMethodSelector = document.querySelector('#payment_method');
+
+    function updatePaymentMethod() {
+        const options = Array.from(paymentMethodSelector.options);
+        
+        if (paperlessBillingSelector.value === 'No') {
+            // Allow selection of "Mailed check" only
+            paymentMethodSelector.value = 'Mailed check';
+            options.forEach(option => {
+                option.disabled = option.value !== 'Mailed check';
+            });
+        } else if (paperlessBillingSelector.value === 'Yes') {
+            // Disable only "Mailed check", enable all other options
+            options.forEach(option => {
+                if (option.value === 'Mailed check') {
+                    option.disabled = true; // Disable "Mailed check"
+                } else {
+                    option.disabled = false; // Enable all other options
+                }
+            });
+        }
+    }
+
+    paperlessBillingSelector.addEventListener('change', updatePaymentMethod);
+    updatePaymentMethod();
+});
+
 
 
