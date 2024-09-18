@@ -127,5 +127,79 @@ btn_done.addEventListener("click", function(event) {
 // To close modal on shadow click
 shadow.addEventListener("click", function() {
     modal_wrapper.classList.remove("active");
-    
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Define the monthly charges for each service
+    const serviceCharges = {
+        phoneService: 40,
+        multipleLines: 60,
+        internetDSL: 58,
+        internetFiberOptic: 48,
+        onlineSecurity: 55,
+        onlineBackup: 55,
+        deviceProtection: 45,
+        techSupport: 58,
+        streamingTV: 66,
+        streamingMovies: 68
+    };
+
+    // Get references to form elements
+    const serviceSelectors = {
+        phoneService: document.querySelector('#phone_service'),
+        multipleLines: document.querySelector('#multiple_lines'),
+        internetService: document.querySelector('#internet_service'),
+        onlineSecurity: document.querySelector('#online_security'),
+        onlineBackup: document.querySelector('#online_backup'),
+        deviceProtection: document.querySelector('#device_protection'),
+        techSupport: document.querySelector('#tech_support'),
+        streamingTV: document.querySelector('#streaming_tv'),
+        streamingMovies: document.querySelector('#streaming_movies')
+    };
+    const tenureInput = document.querySelector('#tenure');
+    const monthlyChargesElement = document.querySelector('#monthly_charges');
+    const totalChargesElement = document.querySelector('#total_charges');
+
+    // Function to calculate and update charges
+    function calculateCharges() {
+        let totalMonthlyCharges = 0;
+
+        // Calculate total monthly charges based on selected services
+        if (serviceSelectors.internetService.value === 'DSL') {
+            totalMonthlyCharges += serviceCharges.internetDSL;
+        } else if (serviceSelectors.internetService.value === 'Fiber optic') {
+            totalMonthlyCharges += serviceCharges.internetFiberOptic;
+        } else if (serviceSelectors.internetService.value === 'No') {
+            // Do nothing for 'No' internet service
+        }
+
+        for (const [service, selector] of Object.entries(serviceSelectors)) {
+            if (service !== 'internetService') {
+                if (selector.value === 'Yes' || selector.value === 'DSL' || selector.value === 'Fiber optic') {
+                    totalMonthlyCharges += serviceCharges[service];
+                }
+            }
+        }
+
+        // Get the tenure value
+        const tenure = parseInt(tenureInput.value, 10) || 0;
+
+        // Calculate total charges
+        const totalCharges = totalMonthlyCharges * tenure;
+
+        // Update the UI
+        monthlyChargesElement.value = totalMonthlyCharges.toFixed(2);
+        totalChargesElement.value = totalCharges.toFixed(2);
+    }
+
+    // Add event listeners to update charges when services or tenure change
+    Object.values(serviceSelectors).forEach(selector => {
+        selector.addEventListener('change', calculateCharges);
+    });
+    tenureInput.addEventListener('input', calculateCharges);
+
+    // Initialize charges on page load
+    calculateCharges();
+});
+
+
