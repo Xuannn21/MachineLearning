@@ -131,16 +131,16 @@ shadow.addEventListener("click", function() {
 document.addEventListener('DOMContentLoaded', function() {
     // Define the monthly charges for each service
     const serviceCharges = {
-        phoneService: 40,
-        multipleLines: 60,
+        phoneService: 67,
+        multipleLines: 82,
         internetDSL: 58,
-        internetFiberOptic: 48,
-        onlineSecurity: 55,
-        onlineBackup: 55,
-        deviceProtection: 45,
-        techSupport: 58,
-        streamingTV: 66,
-        streamingMovies: 68
+        internetFiberOptic: 91,
+        onlineSecurity: 78,
+        onlineBackup: 83,
+        deviceProtection: 84,
+        techSupport: 80,
+        streamingTV: 88,
+        streamingMovies: 88
     };
 
     // Get references to form elements
@@ -179,6 +179,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        totalMonthlyCharges /= 9;
+
         // Get the tenure value
         const tenure = parseInt(tenureInput.value, 10) || 0;
         const totalCharges = totalMonthlyCharges * tenure;
@@ -196,34 +198,34 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateCharges();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const paperlessBillingSelector = document.querySelector('#paperless_billing');
-    const paymentMethodSelector = document.querySelector('#payment_method');
+// document.addEventListener('DOMContentLoaded', function() {
+//     const paperlessBillingSelector = document.querySelector('#paperless_billing');
+//     const paymentMethodSelector = document.querySelector('#payment_method');
 
-    function updatePaymentMethod() {
-        const options = Array.from(paymentMethodSelector.options);
+//     function updatePaymentMethod() {
+//         const options = Array.from(paymentMethodSelector.options);
         
-        if (paperlessBillingSelector.value === 'No') {
-            // Allow selection of "Mailed check" only
-            paymentMethodSelector.value = 'Mailed check';
-            options.forEach(option => {
-                option.disabled = option.value !== 'Mailed check';
-            });
-        } else if (paperlessBillingSelector.value === 'Yes') {
-            // Disable only "Mailed check", enable all other options
-            options.forEach(option => {
-                if (option.value === 'Mailed check') {
-                    option.disabled = true; // Disable "Mailed check"
-                } else {
-                    option.disabled = false; // Enable all other options
-                }
-            });
-        }
-    }
+//         if (paperlessBillingSelector.value === 'No') {
+//             // Allow selection of "Mailed check" only
+//             paymentMethodSelector.value = 'Mailed check';
+//             options.forEach(option => {
+//                 option.disabled = option.value !== 'Mailed check';
+//             });
+//         } else if (paperlessBillingSelector.value === 'Yes') {
+//             // Disable only "Mailed check", enable all other options
+//             options.forEach(option => {
+//                 if (option.value === 'Mailed check') {
+//                     option.disabled = true; // Disable "Mailed check"
+//                 } else {
+//                     option.disabled = false; // Enable all other options
+//                 }
+//             });
+//         }
+//     }
 
-    paperlessBillingSelector.addEventListener('change', updatePaymentMethod);
-    updatePaymentMethod();
-});
+//     paperlessBillingSelector.addEventListener('change', updatePaymentMethod);
+//     updatePaymentMethod();
+// });
 
 
 
