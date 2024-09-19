@@ -208,17 +208,17 @@
                                 <select id="payment_method" name="payment_method" required>
                                     <option value="Electronic check">Electronic check</option>
                                     <option value="Mailed check">Mailed check</option>
-                                    <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
-                                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                                    <option value="Bank transfer (automatic)">Bank transfer</option>
+                                    <option value="Credit card (automatic)">Credit card</option>
                                 </select>
                             </div>
                             <div class="input_wrap">
                                 <label for="monthly_charges">Monthly Charges</label>
-                                <input type="number" id="monthly_charges" name="monthly_charges" step="0.01" required>
+                                <input type="number" id="monthly_charges" name="monthly_charges" step="0.01" readonly>
                             </div>
                             <div class="input_wrap">
                                 <label for="total_charges">Total Charges</label>
-                                <input type="number" id="total_charges" name="total_charges" step="0.01" required>
+                                <input type="number" id="total_charges" name="total_charges" step="0.01" readonly>
                             </div>
                         </div>
                     </div>
@@ -288,5 +288,5 @@
             });
         </script>        
 </body>
-
 </html>
+

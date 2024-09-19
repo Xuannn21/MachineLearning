@@ -120,12 +120,110 @@ btn_done.addEventListener("click", function(event) {
         modal_wrapper.classList.add("active");
     } else {
         alert("Please complete all required fields in the form.");
-    }ert("Please complete all required fields in the form.");
-    // }
+    }
 });
 
 // To close modal on shadow click
 shadow.addEventListener("click", function() {
     modal_wrapper.classList.remove("active");
-    
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Define the monthly charges for each service
+    const serviceCharges = {
+        phoneService: 40,
+        multipleLines: 60,
+        internetDSL: 58,
+        internetFiberOptic: 48,
+        onlineSecurity: 55,
+        onlineBackup: 55,
+        deviceProtection: 45,
+        techSupport: 58,
+        streamingTV: 66,
+        streamingMovies: 68
+    };
+
+    // Get references to form elements
+    const serviceSelectors = {
+        phoneService: document.querySelector('#phone_service'),
+        multipleLines: document.querySelector('#multiple_lines'),
+        internetService: document.querySelector('#internet_service'),
+        onlineSecurity: document.querySelector('#online_security'),
+        onlineBackup: document.querySelector('#online_backup'),
+        deviceProtection: document.querySelector('#device_protection'),
+        techSupport: document.querySelector('#tech_support'),
+        streamingTV: document.querySelector('#streaming_tv'),
+        streamingMovies: document.querySelector('#streaming_movies')
+    };
+    const tenureInput = document.querySelector('#tenure');
+    const monthlyChargesElement = document.querySelector('#monthly_charges');
+    const totalChargesElement = document.querySelector('#total_charges');
+
+    // Function to calculate and update charges
+    function calculateCharges() {
+        let totalMonthlyCharges = 0;
+
+        // Calculate total monthly charges based on selected services
+        if (serviceSelectors.internetService.value === 'DSL') {
+            totalMonthlyCharges += serviceCharges.internetDSL;
+        } else if (serviceSelectors.internetService.value === 'Fiber optic') {
+            totalMonthlyCharges += serviceCharges.internetFiberOptic;
+        } else if (serviceSelectors.internetService.value === 'No') {
+        }
+
+        for (const [service, selector] of Object.entries(serviceSelectors)) {
+            if (service !== 'internetService') {
+                if (selector.value === 'Yes' || selector.value === 'DSL' || selector.value === 'Fiber optic') {
+                    totalMonthlyCharges += serviceCharges[service];
+                }
+            }
+        }
+
+        // Get the tenure value
+        const tenure = parseInt(tenureInput.value, 10) || 0;
+        const totalCharges = totalMonthlyCharges * tenure;
+
+        // Update the UI
+        monthlyChargesElement.value = totalMonthlyCharges.toFixed(2);
+        totalChargesElement.value = totalCharges.toFixed(2);
+    }
+
+    // Add event listeners to update charges when services or tenure change
+    Object.values(serviceSelectors).forEach(selector => {
+        selector.addEventListener('change', calculateCharges);
+    });
+    tenureInput.addEventListener('input', calculateCharges);
+    calculateCharges();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const paperlessBillingSelector = document.querySelector('#paperless_billing');
+    const paymentMethodSelector = document.querySelector('#payment_method');
+
+    function updatePaymentMethod() {
+        const options = Array.from(paymentMethodSelector.options);
+        
+        if (paperlessBillingSelector.value === 'No') {
+            // Allow selection of "Mailed check" only
+            paymentMethodSelector.value = 'Mailed check';
+            options.forEach(option => {
+                option.disabled = option.value !== 'Mailed check';
+            });
+        } else if (paperlessBillingSelector.value === 'Yes') {
+            // Disable only "Mailed check", enable all other options
+            options.forEach(option => {
+                if (option.value === 'Mailed check') {
+                    option.disabled = true; // Disable "Mailed check"
+                } else {
+                    option.disabled = false; // Enable all other options
+                }
+            });
+        }
+    }
+
+    paperlessBillingSelector.addEventListener('change', updatePaymentMethod);
+    updatePaymentMethod();
+});
+
+
+

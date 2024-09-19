@@ -272,5 +272,40 @@ select:focus {
     border-bottom: 2px solid var(--primary); 
     background-color: var(--white);
     border-radius: 5px; 
-
 }
+
+input[readonly] {
+    background-color: #fbfbfb; 
+    color: #a0a0a0; 
+    cursor: not-allowed; 
+    border: 1px solid #ccc; 
+	font-weight: 200;
+}
+
+input[readonly] + label {
+    color: #a0a0a0; 
+}
+
+input[readonly] {
+    padding: 8px; 
+}
+
+input[readonly] {
+    background-color: #fbfbfb; /* Light gray background color */
+    color: #333; /* Dark text color for readability */
+    cursor: not-allowed; /* Indicate that the input is readonly */
+    border: 1px solid #ccc; /* Light border color */
+    padding: 8px; /* Consistent padding */
+}
+
+#monthly_charges,
+#total_charges {
+    font-weight: 300; 
+    background-color: var(--white); 
+}
+
+#monthly_charges {
+    margin-bottom: 0; /* Remove bottom margin if this is above total charges */
+}
+
+
